@@ -1,5 +1,9 @@
 const Dog = () => {
-  return <div>Dog</div>;
+  return (
+    <div>
+      <input />
+    </div>
+  );
 };
 
 export default Dog;
