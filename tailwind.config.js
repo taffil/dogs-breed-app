@@ -5,6 +5,23 @@ export default {
   darkMode: "class", // or 'media' or 'class'
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    screens: {
+      sm: { min: "640px" },
+      // => @media (min-width: 640px) { ... }
+
+      md: { min: "768px", max: "1023px" },
+      tablet: { min: "820px", max: "1023px" },
+      // => @media (min-width: 768px) { ... }
+
+      lg: "1024px",
+      // => @media (min-width: 1024px) { ... }
+
+      xl: "1280px",
+      // // => @media (min-width: 1280px) { ... }
+
+      // "2xl": "1536px",
+      // // => @media (min-width: 1536px) { ... }
+    },
     extend: {
       colors: {
         gray: {

@@ -9,7 +9,8 @@ const Button: FC<ButtonProps> = ({ text, className, ...props }) => {
   return (
     <div className="flex">
       <button
-        className={`bg-[#6e77ee] rounded-md text-gray-100 px-3 border-none ${className}`}
+        className={`bg-indigo-600 rounded-md text-sm font-semibold text-white px-3 hover:bg-indigo-500
+        focus-visible:outline-indigo-600 ${className}`}
         {...props}
       >
         {text}

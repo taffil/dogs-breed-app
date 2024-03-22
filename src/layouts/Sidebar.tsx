@@ -5,7 +5,7 @@ import dog from "../assests/icons/Dog.png";
 
 const Sidebar = () => {
   return (
-    <div className="left-0 h-screen bg-gray-100 text-gray-700 sidebar-shadow">
+    <div className="left-0 bottom-0 bg-gray-100 text-gray-700 shadow-2xl">
       <SidebarIcon
         icon={<img src={dog} className="h-[28px]" />}
         text={"Dashboard"}
