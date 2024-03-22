@@ -1,12 +1,7 @@
-// Need to use the React-specific entry point to allow generating React hooks
-import {
-  FetchBaseQueryMeta,
-  createApi,
-  fetchBaseQuery,
-} from "@reduxjs/toolkit/query/react";
-import { Dog } from "../types/interface";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { Dog, DogApiParams } from "../types/interface";
+import { filterByLifeSpan, sortedDogsByName, paginateArray } from "../helpers";
 
-// Define a service using a base URL and expected endpoints
 export const dogApi = createApi({
   reducerPath: "dogApi",
   baseQuery: fetchBaseQuery({
@@ -18,32 +13,74 @@ export const dogApi = createApi({
     },
   }),
   endpoints: (builder) => ({
+    //Query to get all dogs
     getDogs: builder.query<
       { apiResponse: Dog[]; totalCount: number },
-      { page: number; limit: number }
+      DogApiParams
     >({
-      query: ({ page, limit }) => {
+      query: () => {
         return {
           url: ``,
-          params: {
-            page,
-            limit,
-          },
         };
       },
       transformResponse(
         apiResponse: Dog[],
-        meta: FetchBaseQueryMeta | undefined
+        _meta,
+        { page, pageSize, from, to, sort }
       ): { apiResponse: Dog[]; totalCount: number } {
+        console.log("getDogs", sort);
+        // Function to filter dogs by life span
+        const filteredDogs = filterByLifeSpan(apiResponse, from, to);
+        let sortedDogs = filteredDogs;
+        if (sort) {
+          console.log("test1");
+          //Function to sort dogs by name
+          sortedDogs = sortedDogsByName(filteredDogs);
+        }
+        //Paginate the sorted dogs
+        const paginatedArray = paginateArray(sortedDogs, pageSize);
         return {
-          apiResponse,
-          totalCount: Number(meta?.response?.headers.get("Pagination-Count")),
+          apiResponse: paginatedArray[page],
+          totalCount: sortedDogs.length,
+        };
+      },
+    }),
+    //Query to get a dog by id
+    getDog: builder.query<Dog, { id: string }>({
+      query: ({ id }) => `/${id}`,
+    }),
+    //Query to search for dogs
+    searchDog: builder.query<
+      { apiResponse: Dog[]; totalCount: number },
+      DogApiParams
+    >({
+      query: ({ query }) => {
+        return { url: `search`, params: { q: query } };
+      },
+      transformResponse(
+        apiResponse: Dog[],
+        _,
+        { page, pageSize, from, to, sort }
+      ): { apiResponse: Dog[]; totalCount: number } {
+        console.log("searchDogs", sort);
+        //Filter dogs by life span
+        const filteredDogs = filterByLifeSpan(apiResponse, from, to);
+        let sortedDogs = filteredDogs;
+        if (sort) {
+          console.log("test2");
+          //Sort dogs by name
+          sortedDogs = sortedDogsByName(filteredDogs);
+        }
+        //Paginate the sorted dogs
+        const paginatedArray = paginateArray(sortedDogs, pageSize);
+
+        return {
+          apiResponse: paginatedArray[page],
+          totalCount: sortedDogs.length,
         };
       },
     }),
   }),
 });
 
-// Export hooks for usage in function components, which are
-// auto-generated based on the defined endpoints
-export const { useGetDogsQuery } = dogApi;
+export const { useGetDogsQuery, useGetDogQuery, useSearchDogQuery } = dogApi;

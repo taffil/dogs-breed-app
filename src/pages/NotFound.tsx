@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const NotFound = () => {
   return (
-    <main className="grid h-screen place-items-center">
+    <main className="grid place-items-center">
       <div className="text-center">
         <p className="text-base font-semibold text-indigo-600">404</p>
         <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-5xl">

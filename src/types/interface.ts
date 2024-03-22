@@ -26,3 +26,12 @@ export interface Dog {
     url: string;
   };
 }
+
+export interface DogApiParams {
+  query?: string;
+  page: number;
+  pageSize: number;
+  from: number;
+  to: number;
+  sort: boolean;
+}
