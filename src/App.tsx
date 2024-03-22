@@ -1,20 +1,20 @@
 import { Route, Routes } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
-import Dogs from "./pages/Dogs";
+import Dashboard from "./pages/Dashboard";
 import Dog from "./pages/Dog";
 import About from "./pages/About";
+import NotFound from "./pages/NotFound";
 
 const App = () => {
   return (
     <Routes>
       <Route element={<MainLayout />}>
-        <Route index element={<Dogs />} />
+        <Route index element={<Dashboard />} />
         <Route path="/:id" element={<Dog />} />
         <Route path="/about" element={<About />} />
+        {/* 404 */}
+        <Route path="*" element={<NotFound />} />
       </Route>
-
-      {/* 404 */}
-      <Route path="*" element={<div>404</div>} />
     </Routes>
   );
 };
