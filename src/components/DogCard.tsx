@@ -10,7 +10,7 @@ const DogCard: FC<DogProps> = ({ dog }) => {
   return (
     <Link
       to={`/${dog.name}`}
-      state={{ id: dog.id }}
+      state={{ id: dog.id, image: dog.image?.url }}
       className="rounded-lg shadow-xl bg-gray-100"
     >
       <div className="h-44 rounded-t-lg">

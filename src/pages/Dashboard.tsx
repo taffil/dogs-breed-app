@@ -58,7 +58,7 @@ const Dashboard = () => {
       <div className="flex items-center">
         <Input
           placeholder="Search by name or breed"
-          className="w-full lg:w-1/2"
+          className="w-full lg:w-1/2 xl:w-1/3 2xl:w-1/4"
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);
@@ -138,7 +138,7 @@ const Dashboard = () => {
           />
         </div>
       ) : (
-        <div className="grid grid-rows-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8">
+        <div className="grid grid-rows-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-8 gap-8">
           {searchQuery && skip === false
             ? searchResult?.apiResponse?.map((dog, index) => (
                 <DogCard key={index} dog={dog} />

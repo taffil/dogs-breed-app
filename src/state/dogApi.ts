@@ -28,12 +28,10 @@ export const dogApi = createApi({
         _meta,
         { page, pageSize, from, to, sort }
       ): { apiResponse: Dog[]; totalCount: number } {
-        console.log("getDogs", sort);
         // Function to filter dogs by life span
         const filteredDogs = filterByLifeSpan(apiResponse, from, to);
         let sortedDogs = filteredDogs;
         if (sort) {
-          console.log("test1");
           //Function to sort dogs by name
           sortedDogs = sortedDogsByName(filteredDogs);
         }
@@ -62,12 +60,10 @@ export const dogApi = createApi({
         _,
         { page, pageSize, from, to, sort }
       ): { apiResponse: Dog[]; totalCount: number } {
-        console.log("searchDogs", sort);
         //Filter dogs by life span
         const filteredDogs = filterByLifeSpan(apiResponse, from, to);
         let sortedDogs = filteredDogs;
         if (sort) {
-          console.log("test2");
           //Sort dogs by name
           sortedDogs = sortedDogsByName(filteredDogs);
         }
