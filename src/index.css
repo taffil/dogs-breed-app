@@ -6,6 +6,10 @@
 
 @layer base {
   body #root {
-    @apply bg-gray-200 font-poppins w-full min-h-screen;
+    @apply bg-gray-200 dark:bg-gray-700 font-poppins w-full min-h-screen transition-colors;
+  }
+  span,
+  p {
+    @apply text-gray-800 dark:text-gray-100;
   }
 }

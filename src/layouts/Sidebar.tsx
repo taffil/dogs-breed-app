@@ -1,21 +1,24 @@
 import SidebarIcon from "../components/SidebarIcon";
-import { IoInformationCircleOutline } from "react-icons/io5";
-import { PiMoonStars } from "react-icons/pi";
-import dog from "../assets/icons/Dog.png";
 
 const Sidebar = () => {
   return (
-    <div className="bottom-0 md:left-0 md:top-0 xs:w-full fixed bg-gray-100 text-gray-700 shadow-2xl flex flex-row md:flex-col justify-around md:justify-start z-10">
+    <div className="bottom-0 md:left-0 md:top-0 xs:w-full fixed bg-gray-100 dark:bg-gray-900 shadow-lg dark:shadow-gray-600 flex flex-row md:flex-col justify-around md:justify-start z-10 transition-colors">
       <SidebarIcon
-        icon={<img src={dog} className="h-[28px]" />}
+        icon={<span className="text-[22px]">&#128054;</span>}
         text={"Dashboard"}
         to={"/"}
       />
-      <SidebarIcon icon={<PiMoonStars size={28} />} text={"Dark Mode"} />
       <SidebarIcon
-        icon={<IoInformationCircleOutline size={28} />}
-        text={"About"}
-        to={"/about"}
+        icon={
+          <>
+            <span className="text-[32px] hidden dark:block">&#x2600;</span>
+            <span className="text-[22px] dark:hidden">&#10024;</span>
+          </>
+        }
+        text={
+          document.body.classList.contains("dark") ? "Light Mode" : "Dark Mode"
+        }
+        callback={() => document.body.classList.toggle("dark")}
       />
     </div>
   );
