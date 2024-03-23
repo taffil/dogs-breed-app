@@ -55,81 +55,86 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-1 flex-col">
-      <div className="flex items-center">
-        <Input
-          placeholder="Search by name or breed"
-          className="w-full lg:w-1/2 xl:w-1/3 2xl:w-1/4"
-          value={searchQuery}
-          onChange={(e) => {
-            setSearchQuery(e.target.value);
-            setPage(0);
-          }}
-        />
-        <Button
-          text="Search"
-          className="ml-6 px-4 py-2.5 xs:hidden"
-          onClick={() => setSkip(false)}
-          disabled={!searchQuery}
-        />
-      </div>
-      <div className="flex flex-col md:flex-row">
-        <div className="flex flex-row items-center pr-4 py-4">
-          <p className="font-semibold text-l text-gray-700 mr-3">Life Span: </p>
+      <div className="flex flex-col bg-gray-300 dark:bg-gray-800 p-4 m-4 rounded-md w-fit">
+        <div className="flex items-center justify-between">
           <Input
-            id="minLifeSpan"
-            type="number"
-            placeholder="From"
-            className="bg-white max-w-[100px]"
-            min={0}
-            max={30}
-            value={lifeSpan.min}
+            placeholder="Search by name"
+            value={searchQuery}
             onChange={(e) => {
-              setLifeSpan({ ...lifeSpan, min: parseInt(e.target.value) });
+              setSearchQuery(e.target.value);
               setPage(0);
             }}
           />
-          <p className="font-semibold text-l text-gray-700 mx-3"> - </p>
-          <Input
-            id="maxLifeSpan"
-            type="number"
-            placeholder="To"
-            className="bg-white max-w-[100px]"
-            min={0}
-            max={30}
-            value={lifeSpan.max}
-            onChange={(e) => {
-              setLifeSpan({ ...lifeSpan, max: parseInt(e.target.value) });
-              setPage(0);
-            }}
-          />
-        </div>
-        <div className="flex flex-row items-center justify-between">
-          <div className="flex flex-row items-center">
-            <p className="font-semibold text-l text-gray-700">Sort By Breed </p>
-            <Switch
-              checked={sortDogsByName}
-              onChange={() => {
-                setSortDogsByName(!sortDogsByName);
-                if (skip) {
-                  refetch();
-                } else {
-                  searchQueryRefetch();
-                }
-              }}
-              style={{ color: "#4f46e5" }}
-            />
-          </div>
           <Button
             text="Search"
-            className="px-4 py-2.5 md:hidden"
+            className="ml-6 px-4 py-2.5 xs:hidden"
             onClick={() => setSkip(false)}
             disabled={!searchQuery}
           />
         </div>
+        <div className="flex flex-col md:flex-row">
+          <div className="flex flex-row items-center pr-4 py-4">
+            <p className="font-semibold text-l mr-3">Life Span: </p>
+            <Input
+              id="minLifeSpan"
+              type="number"
+              placeholder="From"
+              className="bg-white max-w-[60px]"
+              min={0}
+              max={30}
+              value={lifeSpan.min}
+              onChange={(e) => {
+                setLifeSpan({ ...lifeSpan, min: parseInt(e.target.value) });
+                setPage(0);
+              }}
+            />
+            <p className="font-semibold text-l mx-3"> - </p>
+            <Input
+              id="maxLifeSpan"
+              type="number"
+              placeholder="To"
+              className="bg-white max-w-[60px]"
+              min={0}
+              max={30}
+              value={lifeSpan.max}
+              onChange={(e) => {
+                setLifeSpan({ ...lifeSpan, max: parseInt(e.target.value) });
+                setPage(0);
+              }}
+            />
+            <p className="ml-1 text-xs"> (years)</p>
+          </div>
+          <div className="flex flex-row items-center justify-between">
+            <div className="flex flex-row items-center">
+              <p className="font-semibold text-l">Sort By Breed </p>
+              <Switch
+                checked={sortDogsByName}
+                onChange={() => {
+                  setSortDogsByName(!sortDogsByName);
+                  if (skip) {
+                    refetch();
+                  } else {
+                    searchQueryRefetch();
+                  }
+                }}
+                sx={{
+                  span: {
+                    color: sortDogsByName ? "#4f46e5" : "#f3f4f6",
+                  },
+                }}
+              />
+            </div>
+            <Button
+              text="Search"
+              className="px-4 py-2.5 md:hidden"
+              onClick={() => setSkip(false)}
+              disabled={!searchQuery}
+            />
+          </div>
+        </div>
       </div>
-      <hr className="bg-gray-400 h-[2px] my-8" />
       {isFetching || searchIsFetching ? (
-        <div className="flex flex-1 justify-center items-center">
+        <div className="flex flex-1 justify-center items-center p-8">
           <CircularProgress
             style={{
               color: "#4f46e5",
@@ -138,7 +143,7 @@ const Dashboard = () => {
           />
         </div>
       ) : (
-        <div className="grid grid-rows-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-8 gap-8">
+        <div className="p-8 grid grid-rows-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-8 gap-8">
           {searchQuery && skip === false
             ? searchResult?.apiResponse?.map((dog, index) => (
                 <DogCard key={index} dog={dog} />
@@ -155,7 +160,16 @@ const Dashboard = () => {
           marginTop: "40px",
           "& .MuiPaginationItem-root:hover": {
             backgroundColor: "#4f46e5",
-            color: "#fff9fa",
+            color: "#f3f4f6",
+          },
+          "& .Mui-selected": {
+            backgroundColor: document.body.classList.contains("dark")
+              ? "#2F3136"
+              : "",
+            color: document.body.classList.contains("dark") ? "#f3f4f6" : "",
+          },
+          "& .MuiPaginationItem-root": {
+            color: document.body.classList.contains("dark") ? "#f3f4f6" : "",
           },
         }}
         count={

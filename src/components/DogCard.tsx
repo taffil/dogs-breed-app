@@ -11,7 +11,7 @@ const DogCard: FC<DogProps> = ({ dog }) => {
     <Link
       to={`/${dog.name}`}
       state={{ id: dog.id, image: dog.image?.url }}
-      className="rounded-lg shadow-xl bg-gray-100"
+      className="rounded-lg shadow-lg dark:shadow-gray-650 bg-gray-100 dark:bg-gray-800 border-gray-100 dark:border-gray-900 border-[1px] hover:scale-105 transition-transform"
     >
       <div className="h-44 rounded-t-lg">
         <img
@@ -21,15 +21,17 @@ const DogCard: FC<DogProps> = ({ dog }) => {
         />
       </div>
       <div className="px-6 my-4">
-        <div className="font-semibold text-xl text-gray-700">{dog.name}</div>
+        <span className="font-semibold text-xl">
+          {dog.name}
+        </span>
       </div>
       <div className="px-6 pb-4 flex flex-col">
         {dog.bred_for && (
-          <span className="w-fit bg-gray-200 rounded px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+          <span className="w-fit bg-gray-200 dark:bg-gray-600 rounded px-3 py-1 text-sm font-semibold mr-2 mb-2">
             {dog.bred_for}
           </span>
         )}
-        <span className="w-fit bg-gray-200 rounded px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+        <span className="w-fit bg-gray-200 dark:bg-gray-600 rounded px-3 py-1 text-sm font-semibold mr-2 mb-2">
           {dog.life_span}
         </span>
       </div>
