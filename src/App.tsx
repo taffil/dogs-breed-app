@@ -2,7 +2,6 @@ import { Route, Routes } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import Dashboard from "./pages/Dashboard";
 import Dog from "./pages/Dog";
-import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 
 const App = () => {
@@ -11,7 +10,6 @@ const App = () => {
       <Route element={<MainLayout />}>
         <Route index element={<Dashboard />} />
         <Route path="/:id" element={<Dog />} />
-        <Route path="/about" element={<About />} />
         {/* 404 */}
         <Route path="*" element={<NotFound />} />
       </Route>

@@ -31,8 +31,8 @@ export const dogApi = createApi({
         // Function to filter dogs by life span
         const filteredDogs = filterByLifeSpan(apiResponse, from, to);
         let sortedDogs = filteredDogs;
-        if (sort) {
-          //Function to sort dogs by name
+        if (!sort) {
+          //Function to sort(desc) dogs by name
           sortedDogs = sortedDogsByName(filteredDogs);
         }
         //Paginate the sorted dogs

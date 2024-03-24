@@ -6,24 +6,16 @@ export const filterByLifeSpan = (
   maxLifeSpan: number
 ): Dog[] => {
   return dogs.filter((dog) => {
-    let min;
-    let max;
-    if (dog.life_span.includes("-")) {
-      const [minLife, maxLife] = dog.life_span.split(" - ");
-      min = parseInt(minLife);
-      max = parseInt(maxLife);
-    } else {
-      const [maxLife] = dog.life_span.split(" ");
-      min = parseInt(maxLife);
-      max = parseInt(maxLife);
-    }
+    const lifeSpan = dog.life_span.split(" ");
+    const min = parseInt(lifeSpan[0]);
+    const max = parseInt(lifeSpan[2] || lifeSpan[0]);
     return min >= minLifeSpan && max <= maxLifeSpan;
   });
 };
 
 export const sortedDogsByName = (dogs: Dog[]): Dog[] => {
   return dogs.sort((dog1, dog2) =>
-    dog1.name > dog2.name ? 1 : dog1.name < dog2.name ? -1 : 0
+    dog1.name < dog2.name ? 1 : dog1.name > dog2.name ? -1 : 0
   );
 };
 

@@ -14,9 +14,9 @@ const Dashboard = () => {
     min: 0,
     max: 30,
   });
-  const [sortDogsByName, setSortDogsByName] = useState<boolean>(false);
+  const [sortDogsByName, setSortDogsByName] = useState<boolean>(true);
 
-  const { data, isFetching, refetch } = useGetDogsQuery(
+  const { data, isFetching, refetch, isError } = useGetDogsQuery(
     {
       page: page,
       pageSize: 10,
@@ -35,6 +35,7 @@ const Dashboard = () => {
     data: searchResult,
     isFetching: searchIsFetching,
     refetch: searchQueryRefetch,
+    isError: searchQueryIsError,
   } = useSearchDogQuery(
     {
       query: debouncedSearchQuery[0].searchQuery,
@@ -55,7 +56,7 @@ const Dashboard = () => {
 
   return (
     <div className="flex flex-1 flex-col">
-      <div className="flex flex-col bg-gray-300 dark:bg-gray-800 p-4 m-4 rounded-md w-fit">
+      <div className="flex flex-col bg-gray-300 dark:bg-gray-800 p-4 mt-8 rounded-md w-fit self-center md:self-start md:ml-8">
         <div className="flex items-center justify-between">
           <Input
             placeholder="Search by name"
@@ -106,7 +107,7 @@ const Dashboard = () => {
           </div>
           <div className="flex flex-row items-center justify-between">
             <div className="flex flex-row items-center">
-              <p className="font-semibold text-l">Sort By Breed </p>
+              <p className="font-semibold text-l">Sort By Name </p>
               <Switch
                 checked={sortDogsByName}
                 onChange={() => {
@@ -142,8 +143,14 @@ const Dashboard = () => {
             size={48}
           />
         </div>
+      ) : isError || searchQueryIsError ? (
+        <div className="flex flex-1 justify-center items-center md:items-center p-8">
+          <span className="text-error font-semibold text-center">
+            Something went wront, please try again later
+          </span>
+        </div>
       ) : (
-        <div className="p-8 grid grid-rows-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-8 gap-8">
+        <div className="p-8 grid grid-rows-1 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-8 gap-8">
           {searchQuery && skip === false
             ? searchResult?.apiResponse?.map((dog, index) => (
                 <DogCard key={index} dog={dog} />
