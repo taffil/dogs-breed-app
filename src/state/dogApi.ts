@@ -29,17 +29,23 @@ export const dogApi = createApi({
         { page, pageSize, from, to, sort }
       ): { apiResponse: Dog[]; totalCount: number } {
         // Function to filter dogs by life span
-        const filteredDogs = filterByLifeSpan(apiResponse, from, to);
-        let sortedDogs = filteredDogs;
-        if (sort) {
-          //Function to sort dogs by name
-          sortedDogs = sortedDogsByName(filteredDogs);
+        if (apiResponse.length) {
+          const filteredDogs = filterByLifeSpan(apiResponse, from, to);
+          let sortedDogs = filteredDogs;
+          if (!sort) {
+            //Function to sort(desc) dogs by name
+            sortedDogs = sortedDogsByName(filteredDogs);
+          }
+          //Paginate the sorted dogs
+          const paginatedArray = paginateArray(sortedDogs, pageSize);
+          return {
+            apiResponse: paginatedArray[page],
+            totalCount: sortedDogs.length,
+          };
         }
-        //Paginate the sorted dogs
-        const paginatedArray = paginateArray(sortedDogs, pageSize);
         return {
-          apiResponse: paginatedArray[page],
-          totalCount: sortedDogs.length,
+          apiResponse: [],
+          totalCount: 0,
         };
       },
     }),
