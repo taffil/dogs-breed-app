@@ -15,6 +15,11 @@ Make sure you have Node.js and npm (or yarn) installed on your machine.
    npm install
    npm run dev
    build for production: npm run build
+   - `git clone https://github.com/taffil/dogs-breed-app.git dogbreedsapp`
+   - `npm install`
+   - `npm run dev`
+   - `npm run build` :build for production
+
 
 ### API Endpoints
 
